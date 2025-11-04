@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,8 +15,88 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="scss/main.scss" />
-    <script defer type="module" src="src/js/controller.js"></script>
+    <script defer type="module" src="js/controller.js"></script>
     <title>Task Manager V2</title>
   </head>
-  <body></body>
+  <body>
+    <header id="main-header">
+      <div class="sidebar-section">
+        <div class="side-bar">
+          <div class="sidebar-content">
+            <span><i class="fa-solid fa-list-ul"></i> All Tasks</span>
+            <span><i class="fa-solid fa-star"></i>Important</span>
+            <span><i class="fa-solid fa-square-check"></i>Completed</span>
+          </div>
+          <div class="sidebar-project">
+            <h3>PROJECTS</h3>
+            <div class="project-content">
+              <span class="project-msg">No project</span>
+              <div class="project-btn">
+                <span><i class="fa-solid fa-plus"></i>Add project</span>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar-stat">
+            <h3>STATISTICS</h3>
+            <div class="stat-content">
+              <div class="total">Total Tasks <span>0</span></div>
+              <div class="completed">Completed <span>0</span></div>
+              <div class="pending">Pending <span>0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header">
+        <div class="nav">
+          <div class="header-task">
+            <div class="logo">
+              <h2>All Tasks</h2>
+            </div>
+            <div class="header-info">
+              <input
+                class="search-input"
+                type="text"
+                placeholder="search Task"
+              />
+              <div class="btn">
+                <button class="btn btn-task">Add Task</button>
+                <select name="tasks">
+                  <option value="">sort</option>
+                  <option value="">option 2</option>
+                  <option value="">option 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="options">
+            <div class="priority">
+              <span class="priority-name">Priority:</span>
+              <select name="All">
+                <option value="All">All</option>
+                <option value="">option 2</option>
+                <option value="">option 3</option>
+              </select>
+            </div>
+            <div class="due-date">
+              <span class="due-name">Due Date:</span>
+              <select name="All">
+                <option value="">All</option>
+                <option value="">option 2</option>
+                <option value="">option 3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <section id="main-section">
+          <div class="task-msg">
+            <span class="clipboard"
+              ><i class="fa-solid fa-clipboard-list"></i
+            ></span>
+            <span>No tasks found.Add a new task to get started</span>
+          </div>
+        </section>
+      </div>
+    </header>
+  </body>
 </html>
