@@ -4,7 +4,7 @@
 :root {
   --light-color: #ffffffe2;
   --dark-color: #111;
-  --primary-color: #1877f2;
+  --primary-color: #045acc;
   --font-satck: "Dosis", sans-serif;
   --dark-ligten: #666666f6;
   --light-darken: #dddddd3b;
@@ -16,51 +16,66 @@
 }
 
 body {
-  max-width: 1300px;
-  padding-top: 90px;
+  max-width: 1200px;
   font-family: var(--font-satck);
   line-height: 1.3;
   margin: 0 auto;
+  padding: 60px;
   background: var(--light-darken);
 }
 #main-header {
   height: 85vh;
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 2fr 20fr;
+  overflow: scroll;
+  margin-right: 5rem;
+  padding: 1rem 2rem;
+  position: relative;
+  gap: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   .header-task {
+    padding-top: 15px;
     .logo {
+      i {
+        cursor: pointer;
+      }
+      @extend %flex;
+      gap: 1rem;
       color: var(--dark-color);
       font-family: "Dosis", sans-serif;
     }
     @extend %flex !optional;
     justify-content: space-between;
   }
+  .opt {
+    @extend %flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin-top: 3rem;
+    .opt-content {
+      @extend %flex;
+      gap: 2rem;
+    }
+    .item {
+      cursor: pointer;
+    }
+    border-bottom: 0.5px solid var(--dark-ligten);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.222);
+    border-radius: 5px;
+  }
   .options {
     @extend %flex;
-    justify-content: flex-start;
-    padding-top: 2rem;
+    cursor: pointer;
     gap: 1rem;
     color: var(--dark-ligten);
-    select {
-      outline: none;
-      padding: 0.2rem;
-    }
-    option {
-      outline: none;
-      background: var(--dark-ligten);
-      color: var(--light-color);
-    }
-    margin-bottom: 1rem;
   }
   .header-info {
-    display: flex;
+    @extend %flex;
     gap: 1rem;
     .search-input {
       outline: none;
       border: none;
-      padding: 0.4rem;
-      width: 260px;
+      padding: 0.7rem;
+      border-radius: 10px;
+      width: 200px;
       font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
         sans-serif;
     }
@@ -69,38 +84,52 @@ body {
       color: var(--light-color);
       background: var(--primary-color);
     }
-    select {
-      padding: 0.4rem;
-      outline: none;
-      border-radius: 5px;
-      border: none;
-      color: var(--light-color);
-      background: var(--primary-color);
-    }
-    option {
-      outline: none;
-      background: var(--dark-ligten);
-    }
   }
-  .nav {
-    border-bottom: 0.1px solid #6666663e;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
+
 .sidebar-section {
+  position: fixed;
+  padding-top: 1rem;
   width: 300px;
+  top: 7%;
   background: var(--light-color);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px) !important;
   height: 85vh;
+  transform: translateX(-1000px);
+  transition: transform 0.6s ease-in-out;
+  &.show {
+    transform: translateX(0%);
+    transition: transform 0.5s ease-in;
+  }
   .side-bar {
+    .fa-strikethrough {
+      position: absolute;
+      top: 4%;
+      cursor: pointer;
+      right: 8%;
+      padding: 0.5rem 1rem;
+      @extend %flex;
+      border-radius: 50px;
+      &:hover {
+        background-color: #b5ccf8;
+        transition: background-color 0.5s ease-in-out;
+      }
+    }
     padding: 2rem;
-    .sidebar-content {
+    %content {
       display: flex;
       flex-direction: column;
       gap: 2rem;
       margin-bottom: 2rem;
     }
     .sidebar-project {
-      @extend .sidebar-content;
+      position: absolute;
+      top: 9%;
+      @extend %content;
       .project-msg {
         font-size: 1.3rem;
         font-weight: 500;
@@ -109,22 +138,30 @@ body {
       .project-btn {
         margin-top: 1.5rem;
         background: var(--primary-color);
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 2rem;
         text-align: center;
         border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.9;
+        }
       }
     }
     .sidebar-stat {
-      @extend .sidebar-content;
+      position: absolute;
+      bottom: 0;
+      @extend %content;
       gap: 1rem;
-      margin-top: 10rem;
     }
     .stat-content {
+      position: relative;
       gap: 1rem;
-      @extend .sidebar-content;
+      @extend %content;
       .total {
         display: flex;
+        gap: 10rem;
         justify-content: space-between;
+        cursor: pointer;
       }
       .completed {
         @extend .total;
@@ -145,5 +182,77 @@ body {
       font-size: 2rem;
       color: #6666669b;
     }
+  }
+}
+.current {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  background-color: #b5ccf8;
+  color: var(--primary-color);
+  border-radius: 7px;
+}
+.all--tasks {
+  overflow: hidden;
+  margin-top: 2rem;
+  li {
+    list-style: none;
+    border-radius: 7px;
+    @extend %flex;
+    margin: 1rem;
+    justify-content: space-between;
+    background: var(--light-darken);
+    padding: 2rem;
+  }
+  .check-list {
+    @extend %flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .details {
+    @extend %flex;
+    justify-content: flex-start;
+    gap: 1.3rem;
+    margin-top: 1rem;
+  }
+  h2 {
+    font-family: "Nunito", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .fav {
+    @extend %flex;
+    gap: 1rem;
+    .fa-star {
+      color: #f3c52f;
+    }
+  }
+  .priority {
+    font-family: "Nunito", sans-serif;
+    border-radius: 5px;
+    margin-left: 1rem;
+    font-size: 1rem;
+    padding: 0.2rem 1rem;
+  }
+  .medium {
+    background-color: #c9cf203f;
+    color: #e08422;
+  }
+  .high {
+    background-color: #fc8085d3;
+    color: #e50b0b;
+  }
+  .low {
+    background-color: #a7f5a7;
+    color: #28ac28;
+  }
+  .medium-list {
+    border-left: 5px solid #f2ee13cf;
+  }
+  .high-list {
+    border-left: 4px solid #f71c1c;
+  }
+  .low-list {
+    border-left: 4px solid #28ac28;
   }
 }

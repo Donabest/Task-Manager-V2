@@ -20,37 +20,12 @@
   </head>
   <body>
     <header id="main-header">
-      <div class="sidebar-section">
-        <div class="side-bar">
-          <div class="sidebar-content">
-            <span><i class="fa-solid fa-list-ul"></i> All Tasks</span>
-            <span><i class="fa-solid fa-star"></i>Important</span>
-            <span><i class="fa-solid fa-square-check"></i>Completed</span>
-          </div>
-          <div class="sidebar-project">
-            <h3>PROJECTS</h3>
-            <div class="project-content">
-              <span class="project-msg">No project</span>
-              <div class="project-btn">
-                <span><i class="fa-solid fa-plus"></i>Add project</span>
-              </div>
-            </div>
-          </div>
-          <div class="sidebar-stat">
-            <h3>STATISTICS</h3>
-            <div class="stat-content">
-              <div class="total">Total Tasks <span>0</span></div>
-              <div class="completed">Completed <span>0</span></div>
-              <div class="pending">Pending <span>0</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="header">
         <div class="nav">
           <div class="header-task">
             <div class="logo">
-              <h2>All Tasks</h2>
+              <i class="fa-solid fa-burger"></i>
+              <h2>Tasks Manager</h2>
             </div>
             <div class="header-info">
               <input
@@ -60,43 +35,159 @@
               />
               <div class="btn">
                 <button class="btn btn-task">Add Task</button>
-                <select name="tasks">
-                  <option value="">sort</option>
-                  <option value="">option 2</option>
-                  <option value="">option 3</option>
-                </select>
               </div>
             </div>
           </div>
+        </div>
+        <div class="opt">
+          <div class="opt-content">
+            <span class="item current"
+              ><i class="fa-solid fa-list-ul"></i> All Tasks</span
+            >
+            <span class="item"><i class="fa-solid fa-star"></i>Important</span>
+            <span class="item"
+              ><i class="fa-solid fa-square-check"></i>Completed</span
+            >
+          </div>
           <div class="options">
             <div class="priority">
-              <span class="priority-name">Priority:</span>
-              <select name="All">
-                <option value="All">All</option>
-                <option value="">option 2</option>
-                <option value="">option 3</option>
-              </select>
+              <span class="priority-name"
+                >Priority:<i class="fa-solid fa-arrow-up-short-wide"></i
+              ></span>
             </div>
             <div class="due-date">
-              <span class="due-name">Due Date:</span>
-              <select name="All">
-                <option value="">All</option>
-                <option value="">option 2</option>
-                <option value="">option 3</option>
-              </select>
+              <span class="due-name"
+                >Due Date:<i class="fa-solid fa-calendar"></i
+              ></span>
             </div>
           </div>
         </div>
 
         <section id="main-section">
-          <div class="task-msg">
+          <!-- <div class="task-msg">
             <span class="clipboard"
               ><i class="fa-solid fa-clipboard-list"></i
             ></span>
             <span>No tasks found.Add a new task to get started</span>
+          </div> -->
+          <div class="all--tasks">
+            <ul class="task--list">
+              <li class="medium-list">
+                <div class="list">
+                  <div class="check-list">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                    <h2>Learn Basic HTML</h2>
+                  </div>
+                  <span class="text">Learn the basic fundamentals of HTML</span>
+                  <div class="details">
+                    <span
+                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
+                    >
+                    <span
+                      ><i class="fa-solid fa-bolt"></i>
+                      <span class="priority medium">MEDIUM</span></span
+                    >
+                  </div>
+                </div>
+                <div class="fav">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+              </li>
+              <!-- <li class="medium-list">
+                <div class="list">
+                  <div class="check-list">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                    <h2>Learn Basic HTML</h2>
+                  </div>
+                  <span class="text">Learn the basic fundamentals of HTML</span>
+                  <div class="details">
+                    <span
+                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
+                    >
+                    <span
+                      ><i class="fa-solid fa-bolt"></i>
+                      <span class="priority medium">MEDIUM</span></span
+                    >
+                  </div>
+                </div>
+                <div class="fav">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+              </li> -->
+              <li class="high-list">
+                <div class="list">
+                  <div class="check-list">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                    <h2>Learn Javascript</h2>
+                  </div>
+                  <span class="text">Learn DOM Manipulation in javascript</span>
+                  <div class="details">
+                    <span
+                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
+                    >
+                    <span
+                      ><i class="fa-solid fa-bolt"></i>
+                      <span class="priority high">HIGH</span></span
+                    >
+                  </div>
+                </div>
+                <div class="fav">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+              </li>
+              <li class="low-list">
+                <div class="list">
+                  <div class="check-list">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                    <h2>Learn Css</h2>
+                  </div>
+                  <span class="text">Basic styling</span>
+                  <div class="details">
+                    <span
+                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
+                    >
+                    <span
+                      ><i class="fa-solid fa-bolt"></i>
+                      <span class="priority low">LOW</span></span
+                    >
+                  </div>
+                </div>
+                <div class="fav">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+              </li>
+            </ul>
           </div>
         </section>
       </div>
     </header>
+    <div class="sidebar-section">
+      <div class="side-bar">
+        <i class="fa-solid fa-strikethrough"></i>
+        <div class="sidebar-project">
+          <h3>PROJECTS</h3>
+          <div class="project-content">
+            <span class="project-msg">No project Yet</span>
+            <div class="project-btn">
+              <span><i class="fa-solid fa-plus"></i>Add project</span>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-stat">
+          <h3>STATISTICS</h3>
+          <div class="stat-content">
+            <div class="total">Total Tasks <span>0</span></div>
+            <div class="completed">Completed <span>0</span></div>
+            <div class="pending">Pending <span>0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="modal"></section>
   </body>
 </html>
