@@ -18,13 +18,14 @@
     <script defer type="module" src="js/controller.js"></script>
     <title>Task Manager V2</title>
   </head>
-  <body>
+  <!-- <body> -->
+  <body data-theme="dark">
     <header id="main-header">
       <div class="header">
         <div class="nav">
           <div class="header-task">
             <div class="logo">
-              <i class="fa-solid fa-burger"></i>
+              <i class="fa-solid fa-burger hamburger-menu"></i>
               <h2>Tasks Manager</h2>
             </div>
             <div class="header-info">
@@ -41,14 +42,17 @@
         </div>
         <div class="opt">
           <div class="opt-content">
-            <span class="item current"
+            <span class="item" data="task"
               ><i class="fa-solid fa-list-ul"></i> All Tasks</span
             >
-            <span class="item"><i class="fa-solid fa-star"></i>Important</span>
-            <span class="item"
+            <span class="item" data="Important"
+              ><i class="fa-solid fa-star"></i>Important</span
+            >
+            <span class="item current" data="completed"
               ><i class="fa-solid fa-square-check"></i>Completed</span
             >
           </div>
+
           <div class="options">
             <div class="priority">
               <span class="priority-name"
@@ -64,12 +68,12 @@
         </div>
 
         <section id="main-section">
-          <!-- <div class="task-msg">
+          <div class="task-msg">
             <span class="clipboard"
               ><i class="fa-solid fa-clipboard-list"></i
             ></span>
             <span>No tasks found.Add a new task to get started</span>
-          </div> -->
+          </div>
           <div class="all--tasks">
             <ul class="task--list">
               <li class="medium-list">
@@ -92,9 +96,10 @@
                 <div class="fav">
                   <i class="fa-solid fa-star"></i>
                   <i class="fa-solid fa-pen-to-square"></i>
+                  <i class="fa-solid fa-trash-can"></i>
                 </div>
               </li>
-              <!-- <li class="medium-list">
+              <li class="medium-list">
                 <div class="list">
                   <div class="check-list">
                     <input type="checkbox" name="checkbox" id="checkbox" />
@@ -114,8 +119,9 @@
                 <div class="fav">
                   <i class="fa-solid fa-star"></i>
                   <i class="fa-solid fa-pen-to-square"></i>
+                  <i class="fa-solid fa-trash-can"></i>
                 </div>
-              </li> -->
+              </li>
               <li class="high-list">
                 <div class="list">
                   <div class="check-list">
@@ -136,6 +142,7 @@
                 <div class="fav">
                   <i class="fa-solid fa-star"></i>
                   <i class="fa-solid fa-pen-to-square"></i>
+                  <i class="fa-solid fa-trash-can"></i>
                 </div>
               </li>
               <li class="low-list">
@@ -158,6 +165,7 @@
                 <div class="fav">
                   <i class="fa-solid fa-star"></i>
                   <i class="fa-solid fa-pen-to-square"></i>
+                  <i class="fa-solid fa-trash-can"></i>
                 </div>
               </li>
             </ul>
@@ -167,7 +175,7 @@
     </header>
     <div class="sidebar-section">
       <div class="side-bar">
-        <i class="fa-solid fa-strikethrough"></i>
+        <i class="fa-solid fa-strikethrough cancel-sidebar"></i>
         <div class="sidebar-project">
           <h3>PROJECTS</h3>
           <div class="project-content">
@@ -175,6 +183,11 @@
             <div class="project-btn">
               <span><i class="fa-solid fa-plus"></i>Add project</span>
             </div>
+            <input
+              type="text"
+              class="add-project"
+              placeholder="enter project name"
+            />
           </div>
         </div>
         <div class="sidebar-stat">
@@ -188,6 +201,60 @@
       </div>
     </div>
 
-    <section class="modal"></section>
+    <section class="modal">
+      <div class="addTask--modal">
+        <div class="modal--header">
+          <h4>Add New Task</h4>
+          <i class="fa-solid fa-xmark close--modal"></i>
+        </div>
+        <form action="" class="form">
+          <div class="title">
+            <label for="title">Title*</label>
+            <input type="text" placeholder="Add Task Title" class="input" />
+          </div>
+          <div class="descrip">
+            <label>Description</label>
+            <textarea name="" id="" class="input"></textarea>
+          </div>
+          <div class="modal-setting">
+            <div class="date">
+              <label for="event-date">Due date</label>
+              <input
+                type="date"
+                id="event-date"
+                name="event-date"
+                class="input"
+              />
+            </div>
+            <div class="priority">
+              <label for="">Priority</label>
+              <select name="" id="" class="select">
+                <option value="">Medium</option>
+                <option value="">High</option>
+                <option value="">Low</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-setting">
+            <div class="project">
+              <label for="">Project</label>
+              <select name="" id="" class="select">
+                <option value="">No Project</option>
+                <option value="">Project 1</option>
+              </select>
+            </div>
+            <div class="label">
+              <label for="text">Label(comma seperated)</label>
+              <input
+                type="text"
+                placeholder="work,personal,urgent"
+                class="input"
+              />
+            </div>
+          </div>
+        </form>
+        <button class="btn save-task--btn">Save Task</button>
+      </div>
+    </section>
   </body>
 </html>

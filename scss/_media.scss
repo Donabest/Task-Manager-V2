@@ -1,0 +1,183 @@
+@media screen and (max-width: 768px) {
+  #main-header {
+    .opt-content {
+      gap: 0.5rem !important;
+    }
+  }
+}
+@media (min-width: 410px) and (max-width: 600px) {
+  body {
+    padding: 0 !important;
+    max-width: 100%;
+  }
+  #main-header {
+    margin-right: 0 !important;
+    .logo {
+      position: relative;
+      margin-bottom: 1rem;
+      i {
+        position: absolute;
+        right: -100%;
+      }
+    }
+  }
+  input {
+    font-size: 16px;
+  }
+  .header-task {
+    margin-top: 1rem;
+    flex-direction: column;
+  }
+  .header-info {
+    gap: 1.6rem !important;
+    margin-top: 1rem;
+  }
+  .opt {
+    margin-top: 1rem !important;
+    justify-content: center !important;
+    flex-direction: column;
+  }
+
+  .options {
+    margin-top: 0.5rem;
+    justify-content: flex-start !important;
+  }
+  #main-section {
+    .all--tasks {
+      li {
+        padding: 1rem;
+        margin: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .fav {
+        margin-top: 1rem;
+      }
+    }
+  }
+  .sidebar-section {
+    right: 0;
+    top: 2%;
+    .fa-strikethrough {
+      left: 8%;
+      top: 2% !important;
+    }
+  }
+
+  .modal {
+    top: 50%;
+    left: 50%;
+    .addTask--modal {
+      width: 360px;
+    }
+  }
+  .modal-setting {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+    input {
+      width: 300px !important;
+    }
+  }
+  select {
+    width: 300px !important;
+    option {
+      width: 100% !important;
+    }
+  }
+  .priority {
+    align-items: flex-start !important;
+  }
+  .label {
+    align-items: flex-start !important;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 480px) {
+  body {
+    padding: 0 !important;
+    max-width: 100%;
+  }
+  #main-header {
+    margin-right: 0 !important;
+    .logo {
+      position: relative;
+      margin-bottom: 1rem;
+      i {
+        position: absolute;
+        right: -100%;
+      }
+    }
+  }
+  input {
+    font-size: 16px;
+  }
+  .header-task {
+    margin-top: 1rem;
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .header-info {
+    gap: 1.6rem !important;
+    margin-top: 1rem;
+  }
+  .opt {
+    margin-top: 1rem !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    flex-direction: column;
+  }
+
+  .options {
+    margin-top: 0.5rem;
+  }
+  #main-section {
+    .all--tasks {
+      li {
+        padding: 1rem;
+        margin: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .fav {
+        margin-top: 1rem;
+      }
+    }
+  }
+  .sidebar-section {
+    right: 0;
+    top: 2%;
+    .fa-strikethrough {
+      left: 8%;
+      top: 2% !important;
+    }
+  }
+
+  .modal {
+    top: 50%;
+    left: 50%;
+    .addTask--modal {
+      width: 360px;
+    }
+  }
+  .modal-setting {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+    input {
+      width: 300px !important;
+    }
+  }
+  select {
+    width: 300px !important;
+    option {
+      width: 100% !important;
+    }
+  }
+  .priority {
+    align-items: flex-start !important;
+  }
+  .label {
+    align-items: flex-start !important;
+  }
+}
