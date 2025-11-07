@@ -68,12 +68,12 @@
         </div>
 
         <section id="main-section">
-          <div class="task-msg">
+          <!-- <div class="task-msg">
             <span class="clipboard"
               ><i class="fa-solid fa-clipboard-list"></i
             ></span>
             <span>No tasks found.Add a new task to get started</span>
-          </div>
+          </div> -->
           <div class="all--tasks">
             <ul class="task--list">
               <li class="medium-list">
@@ -210,11 +210,15 @@
         <form action="" class="form">
           <div class="title">
             <label for="title">Title*</label>
-            <input type="text" placeholder="Add Task Title" class="input" />
+            <input
+              type="text"
+              placeholder="Add Task Title"
+              class="title-input"
+            />
           </div>
           <div class="descrip">
             <label>Description</label>
-            <textarea name="" id="" class="input"></textarea>
+            <textarea name="" id="" class="description--input"></textarea>
           </div>
           <div class="modal-setting">
             <div class="date">
@@ -223,24 +227,25 @@
                 type="date"
                 id="event-date"
                 name="event-date"
-                class="input"
+                class="date--input"
               />
             </div>
             <div class="priority">
               <label for="">Priority</label>
-              <select name="" id="" class="select">
-                <option value="">Medium</option>
-                <option value="">High</option>
-                <option value="">Low</option>
+              <select name="" id="" class="priority-input">
+                <option value="" disabled selected>Select priority</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
               </select>
             </div>
           </div>
           <div class="modal-setting">
             <div class="project">
               <label for="">Project</label>
-              <select name="" id="" class="select">
-                <option value="">No Project</option>
-                <option value="">Project 1</option>
+              <select name="" id="" class="project-input">
+                <option value="" disabled selected>No Project</option>
+                <option value="Project 1">Project 1</option>
               </select>
             </div>
             <div class="label">
@@ -248,7 +253,7 @@
               <input
                 type="text"
                 placeholder="work,personal,urgent"
-                class="input"
+                class="label--input"
               />
             </div>
           </div>

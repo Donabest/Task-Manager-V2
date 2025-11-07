@@ -9,6 +9,8 @@ const addProjectBtn = document.querySelector(".project-btn");
 const selectionList = document.querySelector(".opt-content");
 const saveTask = document.querySelector(".save-task--btn");
 
+const form = document.querySelector(".form");
+
 addTaskBtn.addEventListener("click", function (e) {
   modal.classList.toggle("show");
 });
@@ -34,16 +36,62 @@ selectionList.addEventListener("click", (e) => {
   console.log(target);
   if (!target) return;
 });
+const tasks = [];
 saveTask.addEventListener("click", (e) => {
-  const input = document.querySelectorAll(".input");
-  const select = document.querySelectorAll(".select");
-  select.forEach((option) => {
-    option.addEventListener("change", function (e) {
-      const selectedValue = e.target.value;
-      console.log(selectedValue);
-    });
+  e.preventDefault();
+  const inputTitle = document.querySelector(".title-input");
+  const descriptionInput = document.querySelector(".description--input");
+  const dateInput = document.querySelector(".date--input");
+  const priorityInput = document.querySelector(".priority-input");
+  const projectInput = document.querySelector(".project-input");
+  const labelInput = document.querySelector(".label--input");
+  tasks.push({
+    title: inputTitle.value,
+    description: descriptionInput.value,
+    date: dateInput.value,
+    priority: priorityInput.value,
+    project: projectInput.value,
+    label: labelInput.value,
+    favorite: false,
   });
-  input.forEach((input) => console.log(input.value));
-  //   console.log(input);
-  //   console.log(form);
+  renderUi(tasks[tasks.length - 1]);
+
+  form.reset();
+
+  projectInput.selectedIndex = 0;
+  priorityInput.selectedIndex = 0;
+
+  modal.classList.toggle("show");
 });
+
+function renderUi(task) {
+  console.log(task.priority);
+  console.log(task.project);
+  const markUp = `
+       <li class="${task.priority}-list">
+            <div class="list">
+                <div class="check-list">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                    <h2>${task.title}</h2>
+                </div>
+                <span class="text">${task.description}</span>
+                <div class="details">
+                   <span><i class="fa-solid fa-calendar"></i>${task.date}</span>
+                   <span><i class="fa-solid fa-bolt"></i><span class="priority ${
+                     task.priority
+                   }">${task.priority.toUpperCase()}</span></span>
+                </div>
+            </div>
+                <div class="fav">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                  <i class="fa-solid fa-trash-can"></i>
+                </div>
+        </li>
+    `;
+  const taskList = document.querySelector(".task--list");
+  // const msg = document.querySelector(".task-msg");
+  // msg.innerHTML = "";
+  taskList.innerHTML = "";
+  taskList.insertAdjacentHTML("beforeend", markUp);
+}
