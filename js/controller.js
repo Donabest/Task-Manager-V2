@@ -113,11 +113,7 @@ tasksConditions.addEventListener('click', e => {
     const current = document.querySelector('.current');
     console.log(target);
     current?.classList.remove('current');
-    // if (conditon.classList.contains('completed--btn')) {
-    //   const filters = state.tasks.filter(t => t.completed === true);
-    //   renderUi(filters);
-    // }
-    // console.log(filters);
+
     e.target.classList.add('current');
   }
 });
