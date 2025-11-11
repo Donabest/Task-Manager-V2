@@ -10,12 +10,17 @@ const selectionList = document.querySelector('.opt-content');
 const saveTask = document.querySelector('.save-task--btn');
 const taskList = document.querySelector('.task--list');
 const tasksConditions = document.querySelector('.opt-content');
-// const
+const item = document.querySelectorAll('.item');
 const form = document.querySelector('.form');
+const taskMessage = document.querySelector('.message');
+
 const state = {
   tasks: JSON.parse(localStorage.getItem('savetask')) || [],
   important: [],
 };
+
+if (state.tasks.length === 0)
+  renderMessage('No tasks found. Add a new task to get started');
 
 addTaskBtn.addEventListener('click', function (e) {
   modal.classList.toggle('show');
@@ -34,9 +39,36 @@ closeSidebar.addEventListener('click', e => {
 });
 
 addProjectBtn.addEventListener('click', e => {
-  addProjectInput.classList.add('show');
+  addProjectInput.classList.toggle('show');
 });
+let currentStat = 0;
+let currentView;
+function updateUi() {
+  if (currentView === 'important') {
+    const importantFiltered = state.tasks.filter(
+      task => task.favorite === true
+    );
 
+    taskMessage.innerHTML = '';
+    if (importantFiltered.length === 0) renderMessage('No important task yet');
+
+    renderUi(importantFiltered);
+  } else if (currentView === 'completed') {
+    const completedFiltered = state.tasks.filter(
+      task => task.completed === true
+    );
+
+    taskMessage.innerHTML = '';
+    if (completedFiltered.length === 0) renderMessage('No completed task yet');
+
+    renderUi(completedFiltered);
+  } else {
+    taskMessage.innerHTML = '';
+    if (state.tasks.length === 0)
+      renderMessage('No tasks found.Add a new task to get started');
+    renderUi(state.tasks);
+  }
+}
 saveTask.addEventListener('click', e => {
   e.preventDefault();
   const inputTitle = document.querySelector('.title-input');
@@ -60,7 +92,7 @@ saveTask.addEventListener('click', e => {
     completed: false,
   });
 
-  renderUi(state.tasks);
+  updateUi();
 
   form.reset();
 
@@ -106,38 +138,54 @@ function renderUi(task) {
   taskList.innerHTML = '';
   taskList.insertAdjacentHTML('beforeend', markUp);
 }
+
 tasksConditions.addEventListener('click', e => {
   const target = e.target;
   const conditon = target.classList.contains('item');
+  if (!conditon) return;
   if (conditon) {
     const current = document.querySelector('.current');
-    console.log(target);
     current?.classList.remove('current');
-
     e.target.classList.add('current');
+  }
+  if (target.classList.contains('important--btn')) {
+    currentView = 'important';
+    updateUi();
+  }
+
+  if (target.classList.contains('completed--btn')) {
+    currentView = 'completed';
+    updateUi();
+  }
+
+  if (target.classList.contains('all--tasks-btn')) {
+    currentView = 'all';
+    updateUi();
   }
 });
 
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-star');
-  const id = +target.dataset.id;
   if (!target) return;
+  const id = +target.dataset.id;
+  if (!id) return;
 
   const task = state.tasks.find(t => t.id === id);
 
   task.favorite = !task.favorite;
 
-  renderUi(state.tasks);
-
+  updateUi();
   persistance();
 });
 taskList.addEventListener('click', e => {
   const target = e.target.closest('#checkbox');
   if (!target) return;
   const id = +target.dataset.id;
+  if (!id) return;
   const completeTask = state.tasks.find(edit => edit.id === id);
   completeTask.completed = !completeTask.completed;
-  renderUi(state.tasks);
+
+  updateUi();
   persistance();
 });
 
@@ -145,9 +193,11 @@ taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-trash-can');
   if (!target) return;
   const id = +target.dataset.id;
+  if (!id) return;
   const index = state.tasks.findIndex(task => task.id === id);
   state.tasks.splice(index, 1);
-  renderUi(state.tasks);
+
+  updateUi();
   persistance();
 });
 
@@ -157,9 +207,10 @@ function persistance() {
 
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-pen-to-square');
+  if (!target) return;
   const id = +target.dataset.id;
 
-  if (!target) return;
+  if (!id) return;
 
   const editTask = state.tasks.find(edit => edit.id === id);
 
@@ -180,4 +231,61 @@ taskList.addEventListener('click', e => {
   const index = state.tasks.findIndex(task => task.id === id);
   state.tasks.splice(index, 1);
 });
+
+const sort = document.querySelectorAll('[data-sort]');
+sort.forEach(sortedbtn => {
+  sortedbtn.addEventListener('click', e => {
+    const type = e.target.dataset.sort;
+    const sorted = sortTask(state.tasks, type);
+    renderUi(sorted);
+  });
+});
+
+function sortTask(tasks, sortType) {
+  const sorted = [...tasks];
+
+  if (sortType === 'priority') {
+    const order = { high: 3, medium: 2, low: 1 };
+    sorted.sort((a, b) => order[a.priority] - order[b.priority]);
+  }
+  if (sortType === 'due-date') {
+    sorted.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+  }
+  return sorted;
+}
+
+const input = document.querySelector('.search-input');
+input.addEventListener('input', e => {
+  const inputValue = e.target.value.toLowerCase();
+  if (inputValue.length > 0) {
+    const liveSearch = state.tasks.filter(task =>
+      task.title.toLowerCase().includes(inputValue)
+    );
+    if (liveSearch.length === 0) {
+      renderMessage('No Task Found');
+    }
+    renderUi(liveSearch);
+  } else {
+    taskMessage.innerHTML = '';
+    renderUi(state.tasks);
+  }
+  if (currentView === 'important') {
+    updateUi();
+  } else if (currentView === 'completed') {
+    updateUi();
+  }
+});
+
+function renderMessage(message) {
+  const html = `
+    <div class="task-msg">
+      <span class="clipboard"><i class="fa-solid fa-clipboard-list"></i></span>
+      <span>${message}</span>
+    </div>`;
+  taskMessage.innerHTML = html;
+}
+const addProject = document.querySelector('.add-project');
+
 renderUi(state.tasks);
