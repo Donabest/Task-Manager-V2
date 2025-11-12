@@ -27,8 +27,6 @@ const state = {
 if (state.tasks.length === 0)
   renderMessage('No tasks found. Add a new task to get started');
 
-if (state.input.length === 0) renderProjectmsg();
-
 addTaskBtn.addEventListener('click', function (e) {
   modal.classList.toggle('show');
 });
@@ -49,7 +47,10 @@ addProjectBtn.addEventListener('click', e => {
   addProjectInput.classList.toggle('show');
 });
 let currentStat = 0;
+let PendingStat = 0;
+let completeStat = 0;
 let currentView;
+
 function updateUi() {
   if (currentView === 'important') {
     const importantFiltered = state.tasks.filter(
@@ -87,14 +88,23 @@ saveTask.addEventListener('click', e => {
   const now = (Date.now() + '').slice(-7);
   const id = +now;
 
+  if (!inputTitle.value.trim('')) {
+    return showMessage();
+  }
+  currentStat++;
+  totalstat();
+
+  PendingStat++;
+  pendingStat();
+
   state.tasks.push({
     id,
-    title: inputTitle.value,
-    description: descriptionInput.value,
-    date: dateInput.value,
-    priority: priorityInput.value,
-    project: projectInput.value,
-    label: labelInput.value,
+    title: inputTitle.value.trim(''),
+    description: descriptionInput.value.trim(''),
+    date: dateInput.value.trim(''),
+    priority: priorityInput.value.trim(''),
+    project: projectInput.value.trim(''),
+    label: labelInput.value.trim(''),
     favorite: false,
     completed: false,
   });
@@ -110,7 +120,6 @@ saveTask.addEventListener('click', e => {
 
   persistance();
 });
-
 function renderUi(task) {
   const markUp = task
     .map(task => {
@@ -184,8 +193,10 @@ taskList.addEventListener('click', e => {
   updateUi();
   persistance();
 });
+
 taskList.addEventListener('click', e => {
   const target = e.target.closest('#checkbox');
+  console.log(target);
   if (!target) return;
   const id = +target.dataset.id;
   if (!id) return;
@@ -194,24 +205,50 @@ taskList.addEventListener('click', e => {
 
   updateUi();
   persistance();
-});
 
+  if (completeTask.completed === true) {
+    completeStat++;
+    completedStat();
+    if (PendingStat > 0) {
+      PendingStat--;
+      pendingStat();
+    }
+  }
+
+  if (completeTask.completed === false) {
+    PendingStat++;
+    pendingStat();
+    if (completeStat > 0) {
+      completeStat--;
+      completedStat();
+    }
+  }
+});
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-trash-can');
   if (!target) return;
   const id = +target.dataset.id;
   if (!id) return;
+
+  if (currentStat > 0) {
+    currentStat--;
+    totalstat();
+  }
+
+  if (PendingStat > 0) {
+    PendingStat--;
+    pendingStat();
+  }
+
   const index = state.tasks.findIndex(task => task.id === id);
   state.tasks.splice(index, 1);
 
   updateUi();
   persistance();
 });
-
 function persistance() {
   localStorage.setItem('savetask', JSON.stringify(state.tasks));
 }
-
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-pen-to-square');
   if (!target) return;
@@ -296,23 +333,26 @@ function renderMessage(message) {
 
 addProject.addEventListener('submit', e => {
   e.preventDefault();
-  renderAddprojectInput(addProjectInput.value);
-  addProjectPersist(addProjectInput.value);
+  if (!addProjectInput.value.trim('')) return;
+  const inputValue = addProjectInput.value.trim();
+  renderAddprojectInput(inputValue);
+  addProjectPersist(inputValue);
 
-  state.input.push(addProjectInput.value);
+  state.input.push(inputValue);
 
   addProjectPersist();
 
   addProjectInput.value = '';
   msg.innerHTML = '';
+  addProjectInput.classList.toggle('show');
 });
 
 function renderProjectmsg() {
-  const html = `
+  msg.innerHTML = `
       <span class="project-msg">No project Yet</span>
   `;
-  msg.innerHTML = html;
 }
+renderProjectmsg();
 
 function renderAddprojectInput(input) {
   const html = `
@@ -348,8 +388,8 @@ function deleteProject(projectName) {
   state.input.forEach(input => renderAddprojectInput(input));
 
   renderUi(state.tasks);
+  if (state.input.length === 0) renderProjectmsg();
 }
-
 addprojectList.addEventListener('click', e => {
   const target = e.target.closest('.item');
   const tar = e.target.closest('.delete');
@@ -386,6 +426,43 @@ function rendertheme(theme) {
   themeToggle.innerHTML = `<i class="fa-${
     theme === 'light' ? 'regular' : 'solid'
   } fa-moon"></i>`;
+}
+
+const total = document.querySelector('.total-stat');
+currentStat = +localStorage.getItem('total');
+total.textContent = currentStat;
+function totalstat() {
+  total.textContent = currentStat;
+  localStorage.setItem('total', total.textContent);
+}
+
+const pendingTotal = document.querySelector('.pending-stat');
+PendingStat = +localStorage.getItem('pending');
+pendingTotal.textContent = PendingStat;
+function pendingStat() {
+  pendingTotal.textContent = PendingStat;
+  localStorage.setItem('pending', pendingTotal.textContent);
+}
+
+const completedTotal = document.querySelector('.completed-stat');
+completeStat = +localStorage.getItem('complete');
+completedTotal.textContent = completeStat;
+function completedStat() {
+  completedTotal.textContent = completeStat;
+  localStorage.setItem('complete', completedTotal.textContent);
+}
+
+function showMessage() {
+  const container = document.querySelector('.modal-error-message');
+  container.innerHTML = `<p class="error-message">Task Must Have Title</p>`;
+  const msg = container.querySelector('p');
+  msg.style.animation = 'none';
+  msg.offsetHeight;
+  msg.style.animation = '';
+
+  setTimeout(() => {
+    container.innerHTML = '';
+  }, 3000);
 }
 
 renderUi(state.tasks);

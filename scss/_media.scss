@@ -23,6 +23,7 @@
   }
   input {
     font-size: 16px;
+    margin-left: 1rem;
   }
   .header-task {
     margin-top: 1rem;
@@ -105,12 +106,14 @@
       margin-bottom: 1rem;
       i {
         position: absolute;
-        right: -100%;
+        right: -130%;
       }
     }
   }
   input {
     font-size: 16px;
+    width: 201px !important;
+    margin-left: 1rem;
   }
   .header-task {
     margin-top: 1rem;
@@ -156,6 +159,12 @@
   .modal {
     top: 50%;
     left: 50%;
+    .title {
+      input {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+    }
     .addTask--modal {
       width: 360px;
     }
@@ -166,6 +175,7 @@
     gap: 1rem;
     input {
       width: 300px !important;
+      margin-left: 0 !important;
     }
   }
   select {

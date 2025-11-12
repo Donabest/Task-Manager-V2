@@ -336,6 +336,55 @@ body {
 }
 
 .modal {
+  .error-message {
+    @extend %flex;
+    background-color: red;
+    padding: 0.3rem;
+    color: #fff;
+    width: 100%;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+  @keyframes bounceShake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    15% {
+      transform: translateX(-8px);
+    }
+    30% {
+      transform: translateX(8px);
+    }
+    45% {
+      transform: translateX(-6px);
+    }
+    60% {
+      transform: translateX(6px);
+    }
+    75% {
+      transform: translateX(-4px);
+    }
+    90% {
+      transform: translateX(4px);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
   position: absolute;
   top: 45%;
   left: 45%;
@@ -357,6 +406,7 @@ body {
     height: 100%;
     input {
       margin-top: 0.5rem;
+      font-size: 16px;
       outline: none;
       border: 1px solid #444;
       background: var(--light-color);
@@ -364,6 +414,7 @@ body {
     }
     textarea {
       outline: none;
+      font-size: 16px;
       margin-top: 0.5rem;
       border: 1px solid #444;
       background: var(--light-color);
