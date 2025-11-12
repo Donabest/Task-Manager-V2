@@ -269,6 +269,7 @@ body {
       color: #6666669b;
     }
   }
+
   li {
     list-style: none;
     border-radius: 7px;
@@ -279,6 +280,7 @@ body {
     color: var(--dark-ligten);
     padding: 2rem;
   }
+
   .check-list {
     @extend %flex;
     justify-content: flex-start;
