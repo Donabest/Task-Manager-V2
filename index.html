@@ -19,7 +19,6 @@
     <title>Task Manager V2</title>
   </head>
   <body>
-    <!-- <body data-theme="dark"> -->
     <header id="main-header">
       <div class="header">
         <div class="nav">
@@ -84,76 +83,7 @@
               </div> -->
             </div>
             <ul class="task--list">
-              <!-- <li class="medium-list">
-                <div class="list">
-                  <div class="check-list">
-                    <input type="checkbox" name="checkbox" id="checkbox" />
-                    <h2>Learn Basic HTML</h2>
-                  </div>
-                  <span class="text">Learn the basic fundamentals of HTML</span>
-                  <div class="details">
-                    <span
-                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
-                    >
-                    <span
-                      ><i class="fa-solid fa-bolt"></i>
-                      <span class="priority medium">MEDIUM</span></span
-                    >
-                  </div>
-                </div>
-                <div class="fav">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-pen-to-square"></i>
-                  <i class="fa-solid fa-trash-can"></i>
-                </div>
-              </li>
-              <li class="medium-list">
-                <div class="list">
-                  <div class="check-list">
-                    <input type="checkbox" name="checkbox" id="checkbox" />
-                    <h2>Learn Basic HTML</h2>
-                  </div>
-                  <span class="text">Learn the basic fundamentals of HTML</span>
-                  <div class="details">
-                    <span
-                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
-                    >
-                    <span
-                      ><i class="fa-solid fa-bolt"></i>
-                      <span class="priority medium">MEDIUM</span></span
-                    >
-                  </div>
-                </div>
-                <div class="fav">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-pen-to-square"></i>
-                  <i class="fa-solid fa-trash-can"></i>
-                </div>
-              </li>
-              <li class="high-list">
-                <div class="list">
-                  <div class="check-list">
-                    <input type="checkbox" name="checkbox" id="checkbox" />
-                    <h2>Learn Javascript</h2>
-                  </div>
-                  <span class="text">Learn DOM Manipulation in javascript</span>
-                  <div class="details">
-                    <span
-                      ><i class="fa-solid fa-calendar"></i>Tue,Nov 5,2025</span
-                    >
-                    <span
-                      ><i class="fa-solid fa-bolt"></i>
-                      <span class="priority high">HIGH</span></span
-                    >
-                  </div>
-                </div>
-                <div class="fav">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-pen-to-square"></i>
-                  <i class="fa-solid fa-trash-can"></i>
-                </div>
-              </li>
-              <li class="low-list">
+              <!-- <li class="low-list">
                 <div class="list">
                   <div class="check-list">
                     <input type="checkbox" name="checkbox" id="checkbox" />
@@ -181,27 +111,30 @@
         </section>
       </div>
     </header>
-    <div class="sidebar-section">
+    <div class="sidebar-section show">
       <div class="side-bar">
         <i class="fa-solid fa-strikethrough cancel-sidebar"></i>
         <div class="sidebar-project">
           <h3>PROJECTS</h3>
           <div class="project-content">
-            <span class="project-msg">No project Yet</span>
+            <div class="msg"></div>
             <div class="project-btn">
               <span><i class="fa-solid fa-plus"></i>Add project</span>
             </div>
-            <input
-              type="text"
-              class="add-project"
-              placeholder="enter project name"
-            />
+
+            <form action="" class="addProject-input-form">
+              <input
+                type="text"
+                class="add-project"
+                placeholder="enter project name"
+              />
+            </form>
           </div>
           <ul class="project--list">
-            <li>Project 1</li>
-            <li>Project 1</li>
-            <li>Project 1</li>
-            <li>Project 1</li>
+            <!-- <li class="list">
+              <span class="item">project 1</span>
+              <span><i class="fa-solid fa-trash-can delete"></i></span>
+            </li> -->
           </ul>
         </div>
         <div class="sidebar-stat">
@@ -217,6 +150,9 @@
               Pending <span class="pending-stat">0</span>
             </div>
           </div>
+        </div>
+        <div class="theme">
+          <span><i class="fa-regular fa-moon"></i></span>
         </div>
       </div>
     </div>
@@ -265,7 +201,6 @@
               <label for="">Project</label>
               <select name="" id="" class="project-input">
                 <option value="" disabled selected>No Project</option>
-                <option value="Project 1">Project 1</option>
               </select>
             </div>
             <div class="label">

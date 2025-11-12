@@ -13,14 +13,21 @@ const tasksConditions = document.querySelector('.opt-content');
 const item = document.querySelectorAll('.item');
 const form = document.querySelector('.form');
 const taskMessage = document.querySelector('.message');
+const addprojectList = document.querySelector('.project--list');
+const optionList = document.querySelector('.project-input');
+const addProject = document.querySelector('.addProject-input-form');
+const msg = document.querySelector('.msg');
 
 const state = {
   tasks: JSON.parse(localStorage.getItem('savetask')) || [],
   important: [],
+  input: JSON.parse(localStorage.getItem('addproject')) || [],
 };
 
 if (state.tasks.length === 0)
   renderMessage('No tasks found. Add a new task to get started');
+
+if (state.input.length === 0) renderProjectmsg();
 
 addTaskBtn.addEventListener('click', function (e) {
   modal.classList.toggle('show');
@@ -286,6 +293,99 @@ function renderMessage(message) {
     </div>`;
   taskMessage.innerHTML = html;
 }
-const addProject = document.querySelector('.add-project');
+
+addProject.addEventListener('submit', e => {
+  e.preventDefault();
+  renderAddprojectInput(addProjectInput.value);
+  addProjectPersist(addProjectInput.value);
+
+  state.input.push(addProjectInput.value);
+
+  addProjectPersist();
+
+  addProjectInput.value = '';
+  msg.innerHTML = '';
+});
+
+function renderProjectmsg() {
+  const html = `
+      <span class="project-msg">No project Yet</span>
+  `;
+  msg.innerHTML = html;
+}
+
+function renderAddprojectInput(input) {
+  const html = `
+    <li class="list">
+      <span class="item">${input}</span>
+      <span class="delete" data-project="${input}"><i class="fa-solid fa-trash-can"></i></span>
+    </li>
+  `;
+  const markUp = `
+     <option value="${input}">${input}</option>
+  `;
+  addprojectList.insertAdjacentHTML('beforeend', html);
+  optionList.insertAdjacentHTML('beforeend', markUp);
+}
+
+function addProjectPersist() {
+  localStorage.setItem('addproject', JSON.stringify(state.input));
+}
+
+state.input.forEach(input => {
+  renderAddprojectInput(input);
+});
+function deleteProject(projectName) {
+  state.tasks = state.tasks.filter(task => task.project !== projectName);
+
+  state.input = state.input.filter(input => input !== projectName);
+  addProjectPersist();
+  persistance();
+
+  addprojectList.innerHTML = '';
+  optionList.innerHTML = '';
+
+  state.input.forEach(input => renderAddprojectInput(input));
+
+  renderUi(state.tasks);
+}
+
+addprojectList.addEventListener('click', e => {
+  const target = e.target.closest('.item');
+  const tar = e.target.closest('.delete');
+  if (e.target.classList.contains('fa-trash-can')) {
+    const pro = tar.dataset.project;
+    deleteProject(pro);
+  }
+  if (!target) return;
+  const projectFiltered = state.tasks.filter(
+    task => task.project === target.textContent
+  );
+
+  renderUi(projectFiltered);
+});
+
+const themeToggle = document.querySelector('.theme');
+
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  rendertheme(next);
+});
+
+document.documentElement.setAttribute(
+  'data-theme',
+  localStorage.getItem('theme' || 'light')
+);
+
+rendertheme(localStorage.getItem('theme' || 'light'));
+
+function rendertheme(theme) {
+  themeToggle.innerHTML = `<i class="fa-${
+    theme === 'light' ? 'regular' : 'solid'
+  } fa-moon"></i>`;
+}
 
 renderUi(state.tasks);

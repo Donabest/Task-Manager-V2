@@ -192,20 +192,27 @@ body {
         z-index: -1;
         height: 100px;
         width: 100%;
-        cursor: pointer;
+        .list {
+          @extend %flex;
+          justify-content: space-between;
+          .item {
+            cursor: pointer;
+          }
+        }
         &::-webkit-scrollbar {
           display: none;
         }
         li {
-          cursor: pointer;
-          padding: 0.2rem 1rem;
+          padding: 0.4rem 1rem;
           margin-bottom: 0.5rem;
-
           &:hover {
             background: var(--light-darken);
             border-radius: 0.5rem;
             transition: all 0.5s ease-in-out;
           }
+        }
+        .delete {
+          cursor: pointer;
         }
       }
     }
@@ -234,9 +241,12 @@ body {
       }
     }
   }
+  .theme {
+    position: absolute;
+    bottom: 3%;
+    font-size: 1.4rem;
+  }
 }
-// #main-section {
-// }
 
 .current {
   padding: 0.5rem 1rem;
