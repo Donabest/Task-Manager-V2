@@ -148,7 +148,7 @@
   #main-section {
     .all--tasks {
       li {
-        padding: 1rem;
+        padding: 2.2rem;
         flex-direction: column;
         align-items: flex-start;
       }
@@ -157,14 +157,18 @@
         justify-content: flex-start !important;
         flex-direction: column !important;
         width: 100%;
-        align-items: flex-start;
+        align-items: flex-start !important;
         margin-left: 0.5rem;
-        #checkbox {
+        input {
+          opacity: 1;
+          z-index: 100;
           display: flex !important;
           width: 100%;
           justify-self: flex-start !important;
           align-self: flex-start !important;
-          margin-left: -5rem;
+          text-align: left !important;
+          // width: 2;
+          margin-left: -6rem;
         }
       }
       .fav {
