@@ -17,6 +17,12 @@ const addprojectList = document.querySelector('.project--list');
 const optionList = document.querySelector('.project-input');
 const addProject = document.querySelector('.addProject-input-form');
 const msg = document.querySelector('.msg');
+const sort = document.querySelectorAll('[data-sort]');
+const input = document.querySelector('.search-input');
+const themeToggle = document.querySelector('.theme');
+const total = document.querySelector('.total-stat');
+const pendingTotal = document.querySelector('.pending-stat');
+const completedTotal = document.querySelector('.completed-stat');
 
 const state = {
   tasks: JSON.parse(localStorage.getItem('savetask')) || [],
@@ -24,6 +30,23 @@ const state = {
   input: JSON.parse(localStorage.getItem('addproject')) || [],
 };
 
+//Dark and light Mode toggle
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  rendertheme(next);
+});
+
+document.documentElement.setAttribute(
+  'data-theme',
+  localStorage.getItem('theme' || 'light')
+);
+
+rendertheme(localStorage.getItem('theme' || 'light'));
+
+//Render when the added Task is empty
 if (state.tasks.length === 0)
   renderMessage('No tasks found. Add a new task to get started');
 
@@ -46,6 +69,8 @@ closeSidebar.addEventListener('click', e => {
 addProjectBtn.addEventListener('click', e => {
   addProjectInput.classList.toggle('show');
 });
+
+//initialization
 let currentStat = 0;
 let PendingStat = 0;
 let completeStat = 0;
@@ -77,6 +102,8 @@ function updateUi() {
     renderUi(state.tasks);
   }
 }
+
+//Get add Task information
 saveTask.addEventListener('click', e => {
   e.preventDefault();
   const inputTitle = document.querySelector('.title-input');
@@ -91,6 +118,7 @@ saveTask.addEventListener('click', e => {
   if (!inputTitle.value.trim('')) {
     return showMessage();
   }
+
   currentStat++;
   totalstat();
 
@@ -120,6 +148,8 @@ saveTask.addEventListener('click', e => {
 
   persistance();
 });
+
+//render added task
 function renderUi(task) {
   const markUp = task
     .map(task => {
@@ -155,6 +185,8 @@ function renderUi(task) {
   taskList.insertAdjacentHTML('beforeend', markUp);
 }
 
+//Toggling active between the all,important and completed buttom
+//render the current active
 tasksConditions.addEventListener('click', e => {
   const target = e.target;
   const conditon = target.classList.contains('item');
@@ -180,6 +212,7 @@ tasksConditions.addEventListener('click', e => {
   }
 });
 
+//Add task to important
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-star');
   if (!target) return;
@@ -194,6 +227,7 @@ taskList.addEventListener('click', e => {
   persistance();
 });
 
+//Add task to complete
 taskList.addEventListener('click', e => {
   const target = e.target.closest('#checkbox');
   console.log(target);
@@ -224,6 +258,8 @@ taskList.addEventListener('click', e => {
     }
   }
 });
+
+//Remove or delete task
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-trash-can');
   if (!target) return;
@@ -246,9 +282,12 @@ taskList.addEventListener('click', e => {
   updateUi();
   persistance();
 });
+//persist save task
 function persistance() {
   localStorage.setItem('savetask', JSON.stringify(state.tasks));
 }
+
+//Edit save task
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-pen-to-square');
   if (!target) return;
@@ -276,7 +315,7 @@ taskList.addEventListener('click', e => {
   state.tasks.splice(index, 1);
 });
 
-const sort = document.querySelectorAll('[data-sort]');
+//Sort task when click
 sort.forEach(sortedbtn => {
   sortedbtn.addEventListener('click', e => {
     const type = e.target.dataset.sort;
@@ -285,6 +324,7 @@ sort.forEach(sortedbtn => {
   });
 });
 
+//Sort task by type[priority / date]
 function sortTask(tasks, sortType) {
   const sorted = [...tasks];
 
@@ -292,6 +332,7 @@ function sortTask(tasks, sortType) {
     const order = { high: 3, medium: 2, low: 1 };
     sorted.sort((a, b) => order[a.priority] - order[b.priority]);
   }
+
   if (sortType === 'due-date') {
     sorted.sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -300,7 +341,7 @@ function sortTask(tasks, sortType) {
   return sorted;
 }
 
-const input = document.querySelector('.search-input');
+//filter out the task match with the input
 input.addEventListener('input', e => {
   const inputValue = e.target.value.toLowerCase();
   if (inputValue.length > 0) {
@@ -322,15 +363,7 @@ input.addEventListener('input', e => {
   }
 });
 
-function renderMessage(message) {
-  const html = `
-    <div class="task-msg">
-      <span class="clipboard"><i class="fa-solid fa-clipboard-list"></i></span>
-      <span>${message}</span>
-    </div>`;
-  taskMessage.innerHTML = html;
-}
-
+//Add a new Project in the Sidebar section
 addProject.addEventListener('submit', e => {
   e.preventDefault();
   if (!addProjectInput.value.trim('')) return;
@@ -347,13 +380,7 @@ addProject.addEventListener('submit', e => {
   addProjectInput.classList.toggle('show');
 });
 
-function renderProjectmsg() {
-  msg.innerHTML = `
-      <span class="project-msg">No project Yet</span>
-  `;
-}
-renderProjectmsg();
-
+//Render the addProject input
 function renderAddprojectInput(input) {
   const html = `
     <li class="list">
@@ -367,14 +394,17 @@ function renderAddprojectInput(input) {
   addprojectList.insertAdjacentHTML('beforeend', html);
   optionList.insertAdjacentHTML('beforeend', markUp);
 }
-
+//Persist the project added
 function addProjectPersist() {
   localStorage.setItem('addproject', JSON.stringify(state.input));
 }
 
+//Render the persist project added
 state.input.forEach(input => {
   renderAddprojectInput(input);
 });
+
+//Remove or delete added project
 function deleteProject(projectName) {
   state.tasks = state.tasks.filter(task => task.project !== projectName);
 
@@ -390,6 +420,9 @@ function deleteProject(projectName) {
   renderUi(state.tasks);
   if (state.input.length === 0) renderProjectmsg();
 }
+
+//Delete or remove the added project and
+// also delete all the task linked
 addprojectList.addEventListener('click', e => {
   const target = e.target.closest('.item');
   const tar = e.target.closest('.delete');
@@ -405,48 +438,27 @@ addprojectList.addEventListener('click', e => {
   renderUi(projectFiltered);
 });
 
-const themeToggle = document.querySelector('.theme');
+function statistic() {
+  currentStat = +localStorage.getItem('total');
+  total.textContent = currentStat;
 
-themeToggle.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  rendertheme(next);
-});
+  PendingStat = +localStorage.getItem('pending');
+  pendingTotal.textContent = PendingStat;
 
-document.documentElement.setAttribute(
-  'data-theme',
-  localStorage.getItem('theme' || 'light')
-);
-
-rendertheme(localStorage.getItem('theme' || 'light'));
-
-function rendertheme(theme) {
-  themeToggle.innerHTML = `<i class="fa-${
-    theme === 'light' ? 'regular' : 'solid'
-  } fa-moon"></i>`;
+  completeStat = +localStorage.getItem('complete');
+  completedTotal.textContent = completeStat;
 }
 
-const total = document.querySelector('.total-stat');
-currentStat = +localStorage.getItem('total');
-total.textContent = currentStat;
 function totalstat() {
   total.textContent = currentStat;
   localStorage.setItem('total', total.textContent);
 }
 
-const pendingTotal = document.querySelector('.pending-stat');
-PendingStat = +localStorage.getItem('pending');
-pendingTotal.textContent = PendingStat;
 function pendingStat() {
   pendingTotal.textContent = PendingStat;
   localStorage.setItem('pending', pendingTotal.textContent);
 }
 
-const completedTotal = document.querySelector('.completed-stat');
-completeStat = +localStorage.getItem('complete');
-completedTotal.textContent = completeStat;
 function completedStat() {
   completedTotal.textContent = completeStat;
   localStorage.setItem('complete', completedTotal.textContent);
@@ -465,4 +477,27 @@ function showMessage() {
   }, 3000);
 }
 
+function renderMessage(message) {
+  const html = `
+    <div class="task-msg">
+      <span class="clipboard"><i class="fa-solid fa-clipboard-list"></i></span>
+      <span>${message}</span>
+    </div>`;
+  taskMessage.innerHTML = html;
+}
+
+function renderProjectmsg() {
+  msg.innerHTML = `
+      <span class="project-msg">No project Yet</span>
+  `;
+}
+
+function rendertheme(theme) {
+  themeToggle.innerHTML = `<i class="fa-${
+    theme === 'light' ? 'regular' : 'solid'
+  } fa-moon"></i>`;
+}
+
+renderProjectmsg();
+statistic();
 renderUi(state.tasks);

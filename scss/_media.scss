@@ -142,6 +142,18 @@
         flex-direction: column;
         align-items: flex-start;
       }
+      .check-list {
+        display: flex;
+        justify-content: flex-start !important;
+        flex-direction: column !important;
+        align-items: flex-start;
+        #checkbox {
+          display: flex;
+          justify-self: flex-start !important;
+          align-self: flex-start;
+          margin-left: -6rem;
+        }
+      }
       .fav {
         margin-top: 1rem;
       }
