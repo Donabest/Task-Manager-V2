@@ -71,8 +71,6 @@ addProjectBtn.addEventListener('click', e => {
 });
 
 //initialization
-let currentStat = 0;
-
 let currentView;
 
 function updateUi() {
@@ -117,9 +115,6 @@ saveTask.addEventListener('click', e => {
   if (!inputTitle.value.trim('')) {
     return showMessage();
   }
-
-  currentStat++;
-  totalstat();
 
   state.tasks.push({
     id,
@@ -246,11 +241,6 @@ taskList.addEventListener('click', e => {
   const id = +target.dataset.id;
   if (!id) return;
 
-  if (currentStat > 0) {
-    currentStat--;
-    totalstat();
-  }
-
   const index = state.tasks.findIndex(task => task.id === id);
   state.tasks.splice(index, 1);
 
@@ -263,7 +253,6 @@ taskList.addEventListener('click', e => {
 function persistance() {
   localStorage.setItem('savetask', JSON.stringify(state.tasks));
 }
-
 //Edit save task
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-pen-to-square');
@@ -416,8 +405,7 @@ addprojectList.addEventListener('click', e => {
 });
 
 function statistic() {
-  currentStat = +localStorage.getItem('total');
-  total.textContent = currentStat;
+  total.textContent = +localStorage.getItem('total');
 
   pendingTotal.textContent = +localStorage.getItem('pending');
 
@@ -431,10 +419,12 @@ function statContent() {
   const compltedFilter = state.tasks.filter(t => t.completed === true);
   completedTotal.textContent = compltedFilter.length;
   completedStat();
+
+  total.textContent = state.tasks.length;
+  totalstat();
 }
 
 function totalstat() {
-  total.textContent = currentStat;
   localStorage.setItem('total', total.textContent);
 }
 
