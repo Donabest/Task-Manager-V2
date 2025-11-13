@@ -72,8 +72,7 @@ addProjectBtn.addEventListener('click', e => {
 
 //initialization
 let currentStat = 0;
-let PendingStat = 0;
-let completeStat = 0;
+
 let currentView;
 
 function updateUi() {
@@ -122,9 +121,6 @@ saveTask.addEventListener('click', e => {
   currentStat++;
   totalstat();
 
-  PendingStat++;
-  pendingStat();
-
   state.tasks.push({
     id,
     title: inputTitle.value.trim(''),
@@ -147,8 +143,9 @@ saveTask.addEventListener('click', e => {
   modal.classList.toggle('show');
 
   persistance();
-});
 
+  statContent();
+});
 //render added task
 function renderUi(task) {
   const markUp = task
@@ -240,25 +237,8 @@ taskList.addEventListener('click', e => {
   updateUi();
   persistance();
 
-  if (completeTask.completed === true) {
-    completeStat++;
-    completedStat();
-    if (PendingStat > 0) {
-      PendingStat--;
-      pendingStat();
-    }
-  }
-
-  if (completeTask.completed === false) {
-    PendingStat++;
-    pendingStat();
-    if (completeStat > 0) {
-      completeStat--;
-      completedStat();
-    }
-  }
+  statContent();
 });
-
 //Remove or delete task
 taskList.addEventListener('click', e => {
   const target = e.target.closest('.fa-trash-can');
@@ -271,16 +251,13 @@ taskList.addEventListener('click', e => {
     totalstat();
   }
 
-  if (PendingStat > 0) {
-    PendingStat--;
-    pendingStat();
-  }
-
   const index = state.tasks.findIndex(task => task.id === id);
   state.tasks.splice(index, 1);
 
   updateUi();
   persistance();
+
+  statContent();
 });
 //persist save task
 function persistance() {
@@ -442,11 +419,18 @@ function statistic() {
   currentStat = +localStorage.getItem('total');
   total.textContent = currentStat;
 
-  PendingStat = +localStorage.getItem('pending');
-  pendingTotal.textContent = PendingStat;
+  pendingTotal.textContent = +localStorage.getItem('pending');
 
-  completeStat = +localStorage.getItem('complete');
-  completedTotal.textContent = completeStat;
+  completedTotal.textContent = +localStorage.getItem('complete');
+}
+
+function statContent() {
+  const pendingFilter = state.tasks.filter(t => t.completed === false);
+  pendingTotal.textContent = pendingFilter.length;
+  pendingStat();
+  const compltedFilter = state.tasks.filter(t => t.completed === true);
+  completedTotal.textContent = compltedFilter.length;
+  completedStat();
 }
 
 function totalstat() {
@@ -455,12 +439,10 @@ function totalstat() {
 }
 
 function pendingStat() {
-  pendingTotal.textContent = PendingStat;
   localStorage.setItem('pending', pendingTotal.textContent);
 }
 
 function completedStat() {
-  completedTotal.textContent = completeStat;
   localStorage.setItem('complete', completedTotal.textContent);
 }
 
