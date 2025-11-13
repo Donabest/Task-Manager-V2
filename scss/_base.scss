@@ -287,8 +287,8 @@ body {
     gap: 1rem;
     margin-bottom: 0.3rem;
     input[type='checkbox'] {
-      // -webkit-appearance: auto;
-      // appearance: auto;
+      -webkit-appearance: auto;
+      appearance: auto;
       transform: scale(1.3);
     }
   }
@@ -343,6 +343,7 @@ body {
 }
 
 .modal {
+  z-index: 99;
   .error-message {
     @extend %flex;
     background-color: red;

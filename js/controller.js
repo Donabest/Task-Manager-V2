@@ -448,7 +448,7 @@ function completedStat() {
 
 function showMessage() {
   const container = document.querySelector('.modal-error-message');
-  container.innerHTML = `<p class="error-message">Task Must Have Title</p>`;
+  container.innerHTML = `<p class="error-message">Task Must Have Title !</p>`;
   const msg = container.querySelector('p');
   msg.style.animation = 'none';
   msg.offsetHeight;
