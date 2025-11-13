@@ -343,7 +343,6 @@ body {
 }
 
 .modal {
-  z-index: 99;
   .error-message {
     @extend %flex;
     background-color: red;
@@ -353,6 +352,7 @@ body {
     margin-bottom: 1rem;
     animation: fadeIn 0.3s ease-in-out forwards;
   }
+
   @keyframes bounceShake {
     0%,
     100% {
@@ -431,7 +431,6 @@ body {
     select {
       border: 1px solid #444;
       margin-top: 0.5rem;
-
       background: var(--light-color);
       color: var(--text-color);
     }
@@ -461,6 +460,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .descrip {
     margin-top: 1rem;
     textarea {
@@ -503,7 +503,7 @@ body {
     input[type='text'] {
       width: 190px;
       height: 36px;
-      padding: 0.2rem;
+      padding: 0.8rem;
       &::placeholder {
         color: var(--text-color);
         font-family: 'Raleway', sans-serif;

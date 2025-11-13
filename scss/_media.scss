@@ -4,13 +4,6 @@
       gap: 0.5rem !important;
     }
   }
-  #main-section {
-    // input[type='checkbox'] {
-    //   transform: scale(1.3);
-    //   accent-color: #007bff;
-    //   appearance: auto;
-    // }
-  }
 }
 
 @media (min-width: 410px) and (max-width: 600px) {
@@ -220,6 +213,9 @@
     align-items: flex-start !important;
   }
   .label {
+    input {
+      height: 3rem !important;
+    }
     align-items: flex-start !important;
   }
 }
