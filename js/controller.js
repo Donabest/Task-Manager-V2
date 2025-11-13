@@ -384,8 +384,8 @@ function deleteProject(projectName) {
   state.input.forEach(input => renderAddprojectInput(input));
 
   renderUi(state.tasks);
-  if (state.input.length === 0) renderProjectmsg();
   statContent();
+  if (state.input.length === 0) renderProjectmsg();
 }
 
 //Delete or remove the added project and
